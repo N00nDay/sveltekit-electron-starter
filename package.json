@@ -1,9 +1,23 @@
 {
 	"name": "wmti",
 	"version": "0.0.1",
+	"description": "Walk Me Through It is a simple and straightforward SOP generator",
+	"main": "src/electron.cjs",
+	"author": {
+		"name": "Craig Howell",
+		"email": "chowell@digitalpointsolutions.com"
+	},
+	"license": "MIT",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
+		"start": "cross-env NODE_ENV=dev npm run start:all",
+		"start:all": "concurrently -n=svelte,electron -c='#ff3e00',blue \"npm run start:svelte\" \"npm run start:electron\"",
+		"start:svelte": "vite dev",
+		"start:electron": "electron-forge start",
+		"package": "cross-env NODE_ENV=production npm run package:svelte && npm run package:electron",
+		"package:svelte": "vite build",
+		"package:electron": "electron-forge package",
+		"make": "electron-forge make",
 		"build": "vite build",
 		"preview": "vite preview",
 		"test": "playwright test",
@@ -14,9 +28,18 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
+		"@electron-forge/cli": "^6.0.4",
+		"@electron-forge/maker-deb": "^6.0.4",
+		"@electron-forge/maker-rpm": "^6.0.4",
+		"@electron-forge/maker-squirrel": "^6.0.4",
+		"@electron-forge/maker-zip": "^6.0.4",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^1.0.0",
+		"@sveltejs/adapter-static": "^1.0.0",
 		"@sveltejs/kit": "^1.0.0",
+		"concurrently": "^7.6.0",
+		"cross-env": "^7.0.3",
+		"electron": "^22.0.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
 		"svelte": "^3.54.0",
@@ -26,5 +49,13 @@
 		"vite": "^4.0.0",
 		"vitest": "^0.25.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"electron-context-menu": "^3.6.1",
+		"electron-is-dev": "^2.0.0",
+		"electron-reloader": "^1.2.3",
+		"electron-serve": "^1.1.0",
+		"electron-squirrel-startup": "^1.0.0",
+		"electron-window-state": "^5.0.3"
+	}
 }
